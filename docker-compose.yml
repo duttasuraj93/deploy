@@ -1,0 +1,28 @@
+version : '3.3'
+
+services:
+    mysql:
+        image: mysql:latest
+        container_name: test-mysql
+        volumes:
+            - datavolume:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+        restart: always
+        ports: 
+            - 3306:3306
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: test-pma
+        depends_on:
+            - mysql
+        environment:
+            PMA_ARBITRARY: 1
+            PMA_HOST: mysql
+        restart: always
+        ports:
+            - 9000:80
+
+volumes: 
+    datavolume:
