@@ -1,8 +1,16 @@
 version : '3.3'
 
 services:
+    webserver:
+        image: nginx:alpine
+        container_name: test-webserver
+        restart: always
+        ports:
+          - "80:80"
+          - "443:443"
+
     mysql:
-        image: mysql:latest
+        image: mysql:8.0.21
         container_name: test-mysql
         volumes:
             - datavolume:/var/lib/mysql
@@ -10,10 +18,10 @@ services:
             MYSQL_ROOT_PASSWORD: root
         restart: always
         ports: 
-            - 3306:3306
+            - 3307:3306
 
     phpmyadmin:
-        image: phpmyadmin/phpmyadmin
+        image: phpmyadmin:5.0.2-apache
         container_name: test-pma
         depends_on:
             - mysql
